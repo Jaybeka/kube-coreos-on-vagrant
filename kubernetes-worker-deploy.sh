@@ -77,6 +77,7 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
+sudo mkdir -p /etc/kubernetes/manifests
 # Set Up the kube-proxy Pod
 TEMPLATE=/etc/kubernetes/manifests/kube-proxy.yaml
 cat << EOF > $TEMPLATE
@@ -89,7 +90,7 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-proxy
-    image: typhoon1986/hyperkube:v1.2.0
+    image: quay.io/coreos/hyperkube:${K8S_VER}
     command:
     - /hyperkube
     - proxy
